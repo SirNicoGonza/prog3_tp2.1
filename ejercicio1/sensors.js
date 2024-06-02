@@ -1,4 +1,27 @@
-class Sensor {}
+class Sensor {
+    constructor(id, name, type, value, unit, updated_at){
+        this.id= id;
+        this.name= name;
+        this.type= this.comprobarType(type);
+        this.value= value;
+        this.unit= unit;
+        this.updated_at= updated_at;
+    }
+    updateValue(new_value, new_updated){
+        this.value= new_value;
+        this.updated_at= new_updated;
+
+    }
+
+    comprobarType(valor){
+        if(valor=="temperature" || valor=="humidity" || valor=="pressure"){
+            return valor
+        }else {
+            return ""
+        }
+    }
+
+}
 
 class SensorManager {
     constructor() {
@@ -88,3 +111,5 @@ class SensorManager {
 const monitor = new SensorManager();
 
 monitor.loadSensors("sensors.json");
+//let sen1= new Sensor(1234, "hola", "humidity", 123, "ph", "12-02-2020");
+//console.log(sen1.type);
