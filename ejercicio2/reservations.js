@@ -28,7 +28,7 @@ class Reservation {
 
     get info(){
         
-        return `Fecha: ${this.date}, ${this.#customer.info}, Comensales: ${this.#guests}`;
+        return `Fecha: ${this.date.toLocaleString()}, ${this.#customer.info}, Comensales: ${this.#guests}`;
     }
 
     static validateReservation(date, guests){
