@@ -6,11 +6,37 @@ class Currency {
 }
 
 class CurrencyConverter {
-    constructor() {}
 
-    getCurrencies(apiUrl) {}
+    currencies= [];
 
-    convertCurrency(amount, fromCurrency, toCurrency) {}
+    constructor(apiUrl) {
+        this.apiUrl= apiUrl;
+
+    }
+    
+
+    async getCurrencies() {
+        //El método debe almacenar las monedas obtenidas en el atributo `currencies` como instancias de la clase `Currency`.
+        //GET /currencies
+        try{
+        const response = await fetch(`${this.apiUrl}/currencies`);
+        const data = await response.json();
+        //console.log(data);
+        this.currencies = Object.entries(data).map(([code, name]) => new Currency(code, name));
+        //console.log(this.currencies)
+        
+        } catch(error){
+            console.error("Ups..."+error);
+        }
+    }
+
+    async convertCurrency(amount, fromCurrency, toCurrency) {
+        if (fromCurrency == toCurrency) {
+            return amount;
+        }
+        
+
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
