@@ -34,6 +34,15 @@ class CurrencyConverter {
         if (fromCurrency == toCurrency) {
             return amount;
         }
+
+        try {
+            const response = await fetch(`${this.apiUrl}/latest?amount=${amount}&from=${fromCurrency.code}&to=${toCurrency.code}`);
+            const data = await response.json();
+            return data.rates[toCurrency.code];
+        } catch (error) {
+            console.error('Error converting currency:', error);
+            return null;
+        }
         
 
     }
