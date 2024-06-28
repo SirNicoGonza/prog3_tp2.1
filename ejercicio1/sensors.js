@@ -7,9 +7,9 @@ class Sensor {
         this.unit= unit;
         this.updated_at= updated_at;
     }
-    updateValue(new_value, new_updated){
+    updateValue(new_value){
         this.value= new_value;
-        this.updated_at= new_updated;
+        this.updated_at= new Date().toISOString();;
 
     }
 
@@ -56,7 +56,19 @@ class SensorManager {
         }
     }
 
-    async loadSensors(url) {}
+    async loadSensors(url) {
+        try {
+            const response = await fetch(`${url}`);
+            const data = await response.json();
+            console.log(data);
+            this.sensors = data.map(sensor => new Sensor(sensor.id, sensor.name, sensor.type, sensor.value, sensor.unit, sensor.updated_at));
+            this.render();
+            
+        } catch(error) {
+            console.error("Ups..."+error);
+        }
+
+    }
 
     render() {
         const container = document.getElementById("sensor-container");
@@ -111,5 +123,3 @@ class SensorManager {
 const monitor = new SensorManager();
 
 monitor.loadSensors("sensors.json");
-//let sen1= new Sensor(1234, "hola", "humidity", 123, "ph", "12-02-2020");
-//console.log(sen1.type);

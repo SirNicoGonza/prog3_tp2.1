@@ -24,6 +24,11 @@
             </div>
         </section>
 
-        <script src="sensors.js"></script>
+        <script src="sensors.js">
+            document.addEventListener('DOMContentLoaded', () => {
+            const sensorManager = new SensorManager();
+            sensorManager.loadSensors('sensors.json');
+        });
+        </script>
     </body>
 </html>
