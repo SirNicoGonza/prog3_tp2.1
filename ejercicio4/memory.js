@@ -31,8 +31,32 @@ class Card {
         const cardElement = this.element.querySelector(".card");
         cardElement.classList.remove("flipped");
     }
-}
 
+    toggleFlip() {
+        /*Definir el método `toggleFlip()` que cambia el estado de volteo de la carta en función de su estado actual.*/
+        switch(this.isFlipped){
+            case false:
+                this.isFlipped= true;
+                break;
+            case true:
+                this.isFlipped=false;
+                break
+            default:
+                break;
+        }
+    }
+
+    matches(otherCard){
+        /**Implementar el método `matches(otherCard)` que verifica si la carta actual coincide con otra carta. */ 
+        if (this.name == otherCard.name){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    
+}
+//
 class Board {
     constructor(cards) {
         this.cards = cards;
@@ -74,8 +98,22 @@ class Board {
             this.onCardClick(card);
         }
     }
-}
+    
+    shuffleCards(){
+        /**Implementar el método `shuffleCards()` que mezcla las cartas del tablero. El criterio de mezcla esta dispuesto a elección del estudiante. */
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+          }
+    }
 
+    reset(){
+        /**- Implementar el método `reset()` que reinicia el tablero. Debe emplear otros métodos de la clase `Board` para realizar esta tarea. */
+        this.shuffleCards();
+        this.render();
+    }
+}
+//
 class MemoryGame {
     constructor(board, flipDuration = 500) {
         this.board = board;
@@ -101,6 +139,13 @@ class MemoryGame {
                 setTimeout(() => this.checkForMatch(), this.flipDuration);
             }
         }
+    }
+
+    checkForMatch(){
+        /**Implementar el método `checkForMatch()` que verifica si las cartas volteadas coinciden.
+         * En caso de coincidir, las cartas deben ser añadidas al conjunto de cartas emparejadas.
+         * Es fundamental para que el método `#handleCardClick()` funcione correctamente. */
+        
     }
 }
 
