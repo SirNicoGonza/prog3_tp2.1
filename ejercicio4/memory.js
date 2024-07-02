@@ -34,7 +34,7 @@ class Card {
 
     toggleFlip() {
         /*Definir el método `toggleFlip()` que cambia el estado de volteo de la carta en función de su estado actual.*/
-        switch(this.isFlipped){
+        /**switch(this.isFlipped){
             case false:
                 this.isFlipped= true;
                 break;
@@ -43,16 +43,19 @@ class Card {
                 break
             default:
                 break;
-        }
+        }*/
+        this.isFlipped = !this.isFlipped;
+        this.element.classList.toggle('flipped', this.isFlipped);
     }
 
     matches(otherCard){
         /**Implementar el método `matches(otherCard)` que verifica si la carta actual coincide con otra carta. */ 
-        if (this.name == otherCard.name){
+        /*if (this.name == otherCard.name){
             return true;
         }else {
             return false;
-        }
+        }*/
+        return this.name === otherCard.name;
     }
     
 }
@@ -62,6 +65,7 @@ class Board {
         this.cards = cards;
         this.fixedGridElement = document.querySelector(".fixed-grid");
         this.gameBoardElement = document.getElementById("game-board");
+        this.render();
     }
 
     #calculateColumns() {
@@ -145,7 +149,26 @@ class MemoryGame {
         /**Implementar el método `checkForMatch()` que verifica si las cartas volteadas coinciden.
          * En caso de coincidir, las cartas deben ser añadidas al conjunto de cartas emparejadas.
          * Es fundamental para que el método `#handleCardClick()` funcione correctamente. */
-        
+        let card1= this.flippedCards[0];
+        let card2= this.flippedCards[1];
+
+        if(card1.matches(card2)){
+            this.matchedCards.push(this.flippedCards[0]);
+            this.matchedCards.push(this.flippedCards[1]);
+            this.flippedCards= [];
+        }else {
+            this.flippedCards[0].toggleFlip();
+            this.flippedCards[1].toggleFlip();
+            this.flippedCards= [];
+        }
+    }
+
+    resetGame(){
+        /**- Implementar el método `resetGame()` que reinicia el juego.
+         * Debe emplear otros métodos de la clase `MemoryGame` para realizar esta tarea. */
+        this.board.reset();
+        this.flippedCards= [];
+        this.matchedCards= [];
     }
 }
 
