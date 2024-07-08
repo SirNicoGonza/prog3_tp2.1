@@ -34,27 +34,24 @@ class Card {
 
     toggleFlip() {
         /*Definir el método `toggleFlip()` que cambia el estado de volteo de la carta en función de su estado actual.*/
-        /**switch(this.isFlipped){
-            case false:
-                this.isFlipped= true;
-                break;
-            case true:
-                this.isFlipped=false;
-                break
-            default:
-                break;
-        }*/
-        this.isFlipped = !this.isFlipped;
-        this.element.classList.toggle('flipped', this.isFlipped);
+        console.log(this.isFlipped);
+        this.isFlipped= !this.isFlipped;
+        console.log(this.isFlipped + "-- now.");
+
+
+        if (this.isFlipped==true){
+            this.#flip;
+            console.log("- - UwU - -");
+            return
+        } else {
+            this.#unflip;
+            console.log("Brutal---")
+            return
+        }
+        
     }
 
     matches(otherCard){
-        /**Implementar el método `matches(otherCard)` que verifica si la carta actual coincide con otra carta. */ 
-        /*if (this.name == otherCard.name){
-            return true;
-        }else {
-            return false;
-        }*/
         return this.name === otherCard.name;
     }
     
@@ -101,6 +98,9 @@ class Board {
         if (this.onCardClick) {
             this.onCardClick(card);
         }
+        console.log("Por aqui entramos--")
+        card.toggleFlip();
+        console.log("** Aqui **");
     }
     
     shuffleCards(){
@@ -111,10 +111,22 @@ class Board {
           }
     }
 
+    flipDownAllCards(){
+        /**- Implementar el método `flipDownAllCards()` que posiciona todas las cartas en su estado inicial.
+        * Es necesario para reiniciar el tablero.
+        */  
+        this.cards.forEach(card => {
+            if (card.isFlipped) {
+                card.toggleFlip();
+            }
+        }); 
+    }
+
     reset(){
         /**- Implementar el método `reset()` que reinicia el tablero. Debe emplear otros métodos de la clase `Board` para realizar esta tarea. */
         this.shuffleCards();
         this.render();
+        this.flipDownAllCards();
     }
 }
 //
